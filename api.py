@@ -14,8 +14,7 @@ app.add_middleware(
 )
 
 # Load model and scaler
-model = joblib.load("model/model.pkl")
-scaler = joblib.load("model/scaler.pkl")
+model = joblib.load("model/tb_model.pkl")
 
 @app.post("/predict")
 def predict(features: list = Form(...)):
