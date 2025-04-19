@@ -13,12 +13,16 @@ app.add_middleware(
     allow_headers=["*"]
 )
 
-# Load model and scaler
+# Load model
 model = joblib.load("model/tb_model.pkl")
 
 @app.post("/predict")
 def predict(features: list = Form(...)):
+    # Convert features to numpy array and reshape
     features = np.array(features, dtype=np.float32).reshape(1, -1)
-    scaled = scaler.transform(features)
-    prediction = model.predict(scaled)
+    
+    # Make prediction directly without scaling
+    prediction = model.predict(features)
+    
+    # Return prediction as list
     return {"prediction": prediction.tolist()}
